@@ -20,6 +20,8 @@
 		8532A3DC2B23CAC800734224 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3DB2B23CAC800734224 /* UserData.swift */; };
 		8532A3DF2B23CAD600734224 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3DE2B23CAD600734224 /* Dynamic.swift */; };
 		85EF88C32B25114200E03CA2 /* UserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF88C22B25114200E03CA2 /* UserDataStore.swift */; };
+		85EF88C82B2518E000E03CA2 /* ContestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF88C72B2518E000E03CA2 /* ContestViewController.swift */; };
+		85EF88CB2B2519E400E03CA2 /* UIComponentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF88CA2B2519E400E03CA2 /* UIComponentFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		8532A3DB2B23CAC800734224 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		8532A3DE2B23CAD600734224 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		85EF88C22B25114200E03CA2 /* UserDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStore.swift; sourceTree = "<group>"; };
+		85EF88C72B2518E000E03CA2 /* ContestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestViewController.swift; sourceTree = "<group>"; };
+		85EF88CA2B2519E400E03CA2 /* UIComponentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComponentFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,7 @@
 		8532A3A42B23CA7500734224 /* ShiftLab */ = {
 			isa = PBXGroup;
 			children = (
+				85EF88C92B2519CF00E03CA2 /* Factories */,
 				85EF88C62B2514FB00E03CA2 /* SupportingFiles */,
 				85EF88C52B2514E000E03CA2 /* App */,
 				85EF88C42B25147800E03CA2 /* DataLayer */,
@@ -156,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				8532A3A92B23CA7500734224 /* RegistrationViewController.swift */,
+				85EF88C72B2518E000E03CA2 /* ContestViewController.swift */,
 				8532A3D82B23CAA100734224 /* Storyboards */,
 			);
 			path = Views;
@@ -201,6 +207,14 @@
 				8532A3AE2B23CA7600734224 /* Assets.xcassets */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		85EF88C92B2519CF00E03CA2 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				85EF88CA2B2519E400E03CA2 /* UIComponentFactory.swift */,
+			);
+			path = Factories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,7 +353,9 @@
 				8532A3A62B23CA7500734224 /* AppDelegate.swift in Sources */,
 				8532A3DF2B23CAD600734224 /* Dynamic.swift in Sources */,
 				8532A3DC2B23CAC800734224 /* UserData.swift in Sources */,
+				85EF88C82B2518E000E03CA2 /* ContestViewController.swift in Sources */,
 				85EF88C32B25114200E03CA2 /* UserDataStore.swift in Sources */,
+				85EF88CB2B2519E400E03CA2 /* UIComponentFactory.swift in Sources */,
 				8532A3A82B23CA7500734224 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

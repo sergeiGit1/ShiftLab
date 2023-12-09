@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
 class RegistrationViewModel {
     private let userDataStore: UserDataStoreProtocol
     var isRegistrationSuccessful: Bool = false
+    var registrationCompletion: (() -> Void)?
     var statusText = Dynamic("")
     
     init(userDataStore: UserDataStoreProtocol = UserDataStore()) {
@@ -21,7 +23,7 @@ class RegistrationViewModel {
     }
 
     func validatePassword(_ password: String) -> Bool {
-        let passwordRegex = "^(?=.*[A-Z]).{6,}$"
+        let passwordRegex = "^[А-Яа-яA-Za-z0-9]{6,}$"
         return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password)
     }
 
@@ -31,7 +33,7 @@ class RegistrationViewModel {
         } else if invalidName(surname) {
             statusText.value = ("Фамилия не может содержать цифр и должна состоять из более чем одной буквы")
         } else if !validatePassword(password) {
-            statusText.value = ("Пароль должен содержать хотя бы одну заглавную букву и быть не менее 6 символов в длину")
+            statusText.value = ("Пароль должен быть не менее 6 символов в длину")
         } else if password != secondPassword {
             statusText.value = ("Пароли не совпадают")
         } else {
@@ -40,6 +42,10 @@ class RegistrationViewModel {
             
             let user = UserData(name: name, surname: surname, dateOfBirth: date, password: password)
             userDataStore.saveUserData(user: user)
+            
+            if isRegistrationSuccessful {
+                registrationCompletion?()
+            }
         }
     }
 }

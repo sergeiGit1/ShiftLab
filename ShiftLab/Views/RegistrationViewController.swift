@@ -8,28 +8,42 @@
 import UIKit
 
 class RegistrationViewController: UIViewController {
-
+    
     // MARK: - Properties
-
+    
     private var activeTextField: UITextField?
     private let viewModel = RegistrationViewModel()
-
+    private let uiComponentFactory = UIComponentFactory.shared
+    
     // MARK: - UI Elements
-
-    private lazy var nameLabel: UILabel = makeLabel(withText: "Имя:")
-    private lazy var nameTextField: UITextField = makeTextField(withPlaceholder: "Введите имя")
-    private lazy var surnameLabel: UILabel = makeLabel(withText: "Фамилия:")
-    private lazy var surnameTextField: UITextField = makeTextField(withPlaceholder: "Введите фамилию")
-    private lazy var dobLabel: UILabel = makeLabel(withText: "Дата рождения:")
+    
+    private lazy var nameLabel: UILabel = uiComponentFactory.makeLabel(withText: "Имя:")
+    private lazy var surnameLabel: UILabel = uiComponentFactory.makeLabel(withText: "Фамилия:")
+    private lazy var dobLabel: UILabel = uiComponentFactory.makeLabel(withText: "Дата рождения:")
+    private lazy var passwordLabel: UILabel = uiComponentFactory.makeLabel(withText: "Пароль:")
+    private lazy var nameTextField: UITextField = uiComponentFactory.makeTextField(withPlaceholder: "Введите имя",
+                                                                                   target: self,
+                                                                                   action: #selector(textFieldDidChange))
+    private lazy var surnameTextField: UITextField = uiComponentFactory.makeTextField(withPlaceholder: "Введите фамилию",
+                                                                                      target: self,
+                                                                                      action: #selector(textFieldDidChange))
     private lazy var dobTextField: UITextField = {
-        let textField = makeTextField(withPlaceholder: "Выберите дату рождения")
+        let textField = uiComponentFactory.makeTextField(withPlaceholder: "Выберите дату рождения",
+                                                         target: self,
+                                                         action: #selector(textFieldDidChange))
         textField.inputView = datePicker
         return textField
     }()
-    private lazy var passwordLabel: UILabel = makeLabel(withText: "Пароль:")
-    private lazy var passwordTextField: UITextField = makeTextField(withPlaceholder: "Введите пароль")
-    private lazy var secondPasswordTextField: UITextField = makeTextField(withPlaceholder: "Повторите пароль")
-    private lazy var registrationButton: UIButton = makeButton(withTitle: "Зарегистрироваться")
+    
+    private lazy var passwordTextField: UITextField = uiComponentFactory.makeTextField(withPlaceholder: "Введите пароль",
+                                                                                       target: self,
+                                                                                       action: #selector(textFieldDidChange))
+    private lazy var secondPasswordTextField: UITextField = uiComponentFactory.makeTextField(withPlaceholder: "Повторите пароль",
+                                                                                             target: self,
+                                                                                             action: #selector(textFieldDidChange))
+    private lazy var registrationButton: UIButton = uiComponentFactory.makeButton(withTitle: "Зарегистрироваться",
+                                                                                  target: self,
+                                                                                  action: #selector(registrationButtonAction))
     private lazy var errorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .red
@@ -50,8 +64,10 @@ class RegistrationViewController: UIViewController {
         return datePicker
     }()
 
+    
+    
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addGestureRecognizer(doneGesture)
@@ -60,14 +76,16 @@ class RegistrationViewController: UIViewController {
         registrationButton.isEnabled = false
         setupKeyboardObservers()
     }
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     // MARK: - UI Setup
-
+    
     private func setupUI() {
+        view.backgroundColor = .white
+        
         view.addSubview(nameLabel)
         view.addSubview(nameTextField)
         view.addSubview(surnameLabel)
@@ -79,13 +97,13 @@ class RegistrationViewController: UIViewController {
         view.addSubview(secondPasswordTextField)
         view.addSubview(registrationButton)
         view.addSubview(errorLabel)
-
+        
         nameTextField.delegate = self
         surnameTextField.delegate = self
         dobTextField.delegate = self
         passwordTextField.delegate = self
         secondPasswordTextField.delegate = self
-
+        
         // Constraints setup
         
         NSLayoutConstraint.activate([
@@ -137,35 +155,6 @@ class RegistrationViewController: UIViewController {
             errorLabel.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -20)
         ])
     }
-
-    // MARK: - UI Element Factories
-
-    private func makeLabel(withText text: String) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-
-    private func makeTextField(withPlaceholder placeholder: String) -> UITextField {
-        let textField = UITextField()
-        textField.placeholder = placeholder
-        textField.borderStyle = .roundedRect
-        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }
-
-    private func makeButton(withTitle title: String) -> UIButton {
-        let button = UIButton()
-        button.setTitle(title, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
-        button.layer.cornerRadius = 20
-        button.backgroundColor = .systemBlue
-        button.addTarget(self, action: #selector(registrationButtonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }
     
     // MARK: - User Defaults
     
@@ -174,19 +163,25 @@ class RegistrationViewController: UIViewController {
         let userData = try? JSONEncoder().encode(user)
         userDefaults.setValue(userData, forKey: "userDataKey")
     }
-
+    
     // MARK: - ViewModel Binding
-
+    
     private func bindViewModel() {
         viewModel.statusText.bind { [weak self] (statusText) in
             DispatchQueue.main.async {
                 self?.errorLabel.text = statusText
             }
         }
+        
+        viewModel.registrationCompletion = { [weak self] in
+            let contestViewController = ContestViewController()
+            contestViewController.modalPresentationStyle = .fullScreen
+            self?.present(contestViewController, animated: true)
+        }
     }
-
+    
     // MARK: - ViewModel Interaction
-
+    
     @objc private func registrationButtonAction() {
         viewModel.userButtonPressed(
             name: nameTextField.text ?? "",
@@ -195,39 +190,38 @@ class RegistrationViewController: UIViewController {
             password: passwordTextField.text ?? "",
             secondPassword: secondPasswordTextField.text ?? "")
     }
-
+    
     // MARK: - TextField and Keyboard Handling
-
+    
     @objc private func textFieldDidChange() {
         let allFieldsFilled = ![nameTextField, surnameTextField, dobTextField, passwordTextField, secondPasswordTextField].contains { $0.text?.isEmpty ?? true }
         registrationButton.isEnabled = allFieldsFilled
     }
-
+    
     private func setupKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-
+    
     @objc private func keyboardWillShow(notification: NSNotification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        let keyboardHeight = keyboardFrame.cgRectValue.height
-        self.view.frame.origin.y = -keyboardHeight
+        self.view.frame.origin.y = -55
     }
-
+    
     @objc private func keyboardWillHide(notification: NSNotification) {
         self.view.frame.origin.y = 0
     }
-
+    
     // MARK: - Date Picker Handling
-
+    
     @objc private func dateChanged() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dobTextField.text = dateFormatter.string(from: datePicker.date)
     }
-
+    
     // MARK: - Gesture Recognizer Handling
-
+    
     @objc private func doneGestureAction() {
         view.endEditing(true)
     }
