@@ -9,13 +9,17 @@
 /* Begin PBXBuildFile section */
 		8532A3A62B23CA7500734224 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3A52B23CA7500734224 /* AppDelegate.swift */; };
 		8532A3A82B23CA7500734224 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3A72B23CA7500734224 /* SceneDelegate.swift */; };
-		8532A3AA2B23CA7500734224 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3A92B23CA7500734224 /* ViewController.swift */; };
+		8532A3AA2B23CA7500734224 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3A92B23CA7500734224 /* RegistrationViewController.swift */; };
 		8532A3AD2B23CA7500734224 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8532A3AB2B23CA7500734224 /* Main.storyboard */; };
 		8532A3AF2B23CA7600734224 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8532A3AE2B23CA7600734224 /* Assets.xcassets */; };
 		8532A3B22B23CA7600734224 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8532A3B02B23CA7600734224 /* LaunchScreen.storyboard */; };
 		8532A3BD2B23CA7600734224 /* ShiftLabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3BC2B23CA7600734224 /* ShiftLabTests.swift */; };
 		8532A3C72B23CA7600734224 /* ShiftLabUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3C62B23CA7600734224 /* ShiftLabUITests.swift */; };
 		8532A3C92B23CA7600734224 /* ShiftLabUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3C82B23CA7600734224 /* ShiftLabUITestsLaunchTests.swift */; };
+		8532A3DA2B23CAC300734224 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3D92B23CAC300734224 /* RegistrationViewModel.swift */; };
+		8532A3DC2B23CAC800734224 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3DB2B23CAC800734224 /* UserData.swift */; };
+		8532A3DF2B23CAD600734224 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8532A3DE2B23CAD600734224 /* Dynamic.swift */; };
+		85EF88C32B25114200E03CA2 /* UserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF88C22B25114200E03CA2 /* UserDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +43,7 @@
 		8532A3A22B23CA7500734224 /* ShiftLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShiftLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8532A3A52B23CA7500734224 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8532A3A72B23CA7500734224 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8532A3A92B23CA7500734224 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8532A3A92B23CA7500734224 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		8532A3AC2B23CA7500734224 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8532A3AE2B23CA7600734224 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8532A3B12B23CA7600734224 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +53,10 @@
 		8532A3C22B23CA7600734224 /* ShiftLabUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShiftLabUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8532A3C62B23CA7600734224 /* ShiftLabUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftLabUITests.swift; sourceTree = "<group>"; };
 		8532A3C82B23CA7600734224 /* ShiftLabUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftLabUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		8532A3D92B23CAC300734224 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
+		8532A3DB2B23CAC800734224 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		8532A3DE2B23CAD600734224 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
+		85EF88C22B25114200E03CA2 /* UserDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,12 +107,12 @@
 		8532A3A42B23CA7500734224 /* ShiftLab */ = {
 			isa = PBXGroup;
 			children = (
-				8532A3A52B23CA7500734224 /* AppDelegate.swift */,
-				8532A3A72B23CA7500734224 /* SceneDelegate.swift */,
-				8532A3A92B23CA7500734224 /* ViewController.swift */,
-				8532A3AB2B23CA7500734224 /* Main.storyboard */,
-				8532A3AE2B23CA7600734224 /* Assets.xcassets */,
-				8532A3B02B23CA7600734224 /* LaunchScreen.storyboard */,
+				85EF88C62B2514FB00E03CA2 /* SupportingFiles */,
+				85EF88C52B2514E000E03CA2 /* App */,
+				85EF88C42B25147800E03CA2 /* DataLayer */,
+				8532A3D72B23CA9B00734224 /* Views */,
+				8532A3D62B23CA9400734224 /* ViewModels */,
+				8532A3D52B23CA8E00734224 /* Models */,
 				8532A3B32B23CA7600734224 /* Info.plist */,
 			);
 			path = ShiftLab;
@@ -125,6 +133,74 @@
 				8532A3C82B23CA7600734224 /* ShiftLabUITestsLaunchTests.swift */,
 			);
 			path = ShiftLabUITests;
+			sourceTree = "<group>";
+		};
+		8532A3D52B23CA8E00734224 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8532A3DB2B23CAC800734224 /* UserData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8532A3D62B23CA9400734224 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8532A3D92B23CAC300734224 /* RegistrationViewModel.swift */,
+				8532A3DD2B23CACD00734224 /* Bindings */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		8532A3D72B23CA9B00734224 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8532A3A92B23CA7500734224 /* RegistrationViewController.swift */,
+				8532A3D82B23CAA100734224 /* Storyboards */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8532A3D82B23CAA100734224 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				8532A3AB2B23CA7500734224 /* Main.storyboard */,
+				8532A3B02B23CA7600734224 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		8532A3DD2B23CACD00734224 /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				8532A3DE2B23CAD600734224 /* Dynamic.swift */,
+			);
+			path = Bindings;
+			sourceTree = "<group>";
+		};
+		85EF88C42B25147800E03CA2 /* DataLayer */ = {
+			isa = PBXGroup;
+			children = (
+				85EF88C22B25114200E03CA2 /* UserDataStore.swift */,
+			);
+			path = DataLayer;
+			sourceTree = "<group>";
+		};
+		85EF88C52B2514E000E03CA2 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8532A3A52B23CA7500734224 /* AppDelegate.swift */,
+				8532A3A72B23CA7500734224 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		85EF88C62B2514FB00E03CA2 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				8532A3AE2B23CA7600734224 /* Assets.xcassets */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,8 +334,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8532A3AA2B23CA7500734224 /* ViewController.swift in Sources */,
+				8532A3AA2B23CA7500734224 /* RegistrationViewController.swift in Sources */,
+				8532A3DA2B23CAC300734224 /* RegistrationViewModel.swift in Sources */,
 				8532A3A62B23CA7500734224 /* AppDelegate.swift in Sources */,
+				8532A3DF2B23CAD600734224 /* Dynamic.swift in Sources */,
+				8532A3DC2B23CAC800734224 /* UserData.swift in Sources */,
+				85EF88C32B25114200E03CA2 /* UserDataStore.swift in Sources */,
 				8532A3A82B23CA7500734224 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
