@@ -204,7 +204,6 @@ class RegistrationViewController: UIViewController {
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         self.view.frame.origin.y = -55
     }
     

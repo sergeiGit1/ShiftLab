@@ -22,6 +22,8 @@
 		85EF88C32B25114200E03CA2 /* UserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF88C22B25114200E03CA2 /* UserDataStore.swift */; };
 		85EF88C82B2518E000E03CA2 /* ContestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF88C72B2518E000E03CA2 /* ContestViewController.swift */; };
 		85EF88CB2B2519E400E03CA2 /* UIComponentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF88CA2B2519E400E03CA2 /* UIComponentFactory.swift */; };
+		85EF88CF2B256F6000E03CA2 /* ContestsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF88CE2B256F6000E03CA2 /* ContestsAPI.swift */; };
+		85EF88D12B25726300E03CA2 /* Contest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF88D02B25726300E03CA2 /* Contest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		85EF88C22B25114200E03CA2 /* UserDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStore.swift; sourceTree = "<group>"; };
 		85EF88C72B2518E000E03CA2 /* ContestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestViewController.swift; sourceTree = "<group>"; };
 		85EF88CA2B2519E400E03CA2 /* UIComponentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComponentFactory.swift; sourceTree = "<group>"; };
+		85EF88CE2B256F6000E03CA2 /* ContestsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestsAPI.swift; sourceTree = "<group>"; };
+		85EF88D02B25726300E03CA2 /* Contest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,13 +115,13 @@
 		8532A3A42B23CA7500734224 /* ShiftLab */ = {
 			isa = PBXGroup;
 			children = (
-				85EF88C92B2519CF00E03CA2 /* Factories */,
-				85EF88C62B2514FB00E03CA2 /* SupportingFiles */,
-				85EF88C52B2514E000E03CA2 /* App */,
-				85EF88C42B25147800E03CA2 /* DataLayer */,
+				85EF88CC2B256BF300E03CA2 /* Services */,
 				8532A3D72B23CA9B00734224 /* Views */,
 				8532A3D62B23CA9400734224 /* ViewModels */,
 				8532A3D52B23CA8E00734224 /* Models */,
+				85EF88C52B2514E000E03CA2 /* App */,
+				85EF88C92B2519CF00E03CA2 /* Factories */,
+				85EF88C62B2514FB00E03CA2 /* SupportingFiles */,
 				8532A3B32B23CA7600734224 /* Info.plist */,
 			);
 			path = ShiftLab;
@@ -144,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				8532A3DB2B23CAC800734224 /* UserData.swift */,
+				85EF88D02B25726300E03CA2 /* Contest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -215,6 +220,23 @@
 				85EF88CA2B2519E400E03CA2 /* UIComponentFactory.swift */,
 			);
 			path = Factories;
+			sourceTree = "<group>";
+		};
+		85EF88CC2B256BF300E03CA2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				85EF88CD2B256F0800E03CA2 /* NetworkLayer */,
+				85EF88C42B25147800E03CA2 /* DataLayer */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		85EF88CD2B256F0800E03CA2 /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+				85EF88CE2B256F6000E03CA2 /* ContestsAPI.swift */,
+			);
+			path = NetworkLayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8532A3AA2B23CA7500734224 /* RegistrationViewController.swift in Sources */,
+				85EF88D12B25726300E03CA2 /* Contest.swift in Sources */,
 				8532A3DA2B23CAC300734224 /* RegistrationViewModel.swift in Sources */,
 				8532A3A62B23CA7500734224 /* AppDelegate.swift in Sources */,
 				8532A3DF2B23CAD600734224 /* Dynamic.swift in Sources */,
@@ -357,6 +380,7 @@
 				85EF88C32B25114200E03CA2 /* UserDataStore.swift in Sources */,
 				85EF88CB2B2519E400E03CA2 /* UIComponentFactory.swift in Sources */,
 				8532A3A82B23CA7500734224 /* SceneDelegate.swift in Sources */,
+				85EF88CF2B256F6000E03CA2 /* ContestsAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

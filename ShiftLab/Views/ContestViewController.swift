@@ -16,7 +16,7 @@ class ContestViewController: UIViewController {
     
     // MARK: - UI Elements
     
-    private lazy var greetingsButton = uiComponentFactory.makeButton(withTitle: "Приветсвие",
+    private lazy var greetingsButton = uiComponentFactory.makeButton(withTitle: "Приветствие",
                                                                      target: self,
                                                                      action: #selector(greetingsAction))
     
@@ -40,17 +40,17 @@ class ContestViewController: UIViewController {
             greetingsButton.heightAnchor.constraint(equalToConstant: 44),
         ])
     }
-
+    
     @objc func greetingsAction() {
         if let user = userDataStore.loadUserData(), let userName = user.name {
-            let alertController = UIAlertController(title: "Привет! ", message: "\(userName)", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            let alertController = uiComponentFactory.makeAlert(title: "Привет!", message: "\(userName)")
             present(alertController, animated: true, completion: nil)
         } else {
-            let alertController = UIAlertController(title: "Упс...", message: "Данные пользователя не найдены.", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            let alertController = uiComponentFactory.makeAlert(title: "Упс...", message: "Данные пользователя не найдены.")
             present(alertController, animated: true, completion: nil)
         }
     }
 
 }
+
+
