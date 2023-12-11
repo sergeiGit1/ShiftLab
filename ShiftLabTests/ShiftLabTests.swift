@@ -10,51 +10,56 @@ import XCTest
 
 final class ShiftLabTests: XCTestCase {
 
-    var viewModel: RegistrationViewModel!
-
-    override func setUp() {
-        super.setUp()
-        viewModel = RegistrationViewModel()
+    var sut: RegistrationViewModel!
+    
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        sut = RegistrationViewModel()
+    }
+    
+    override func tearDownWithError() throws {
+        sut = nil
+        try super.tearDownWithError()
     }
 
     func testInvalidName() {
-        XCTAssertTrue(viewModel.invalidShortName("B"))
-        XCTAssertTrue(viewModel.invalidNumberName("123"))
+        XCTAssertTrue(sut.invalidShortName("B") == true)
+        XCTAssertTrue(sut.invalidNumberName("123"))
     }
     
     func testValidName() {
-        XCTAssertFalse(viewModel.invalidNumberName("Bar"))
-        XCTAssertFalse(viewModel.invalidShortName("Baz"))
+        XCTAssertFalse(sut.invalidNumberName("Bar"))
+        XCTAssertFalse(sut.invalidShortName("Baz"))
     }
 
     func testInvalidPassword() {
-        XCTAssertFalse(viewModel.validatePasswordLength("bazba"))
-        XCTAssertFalse(viewModel.validateUppercaseLetter("bazbar"))
+        XCTAssertFalse(sut.validatePasswordLength("bazba"))
+        XCTAssertFalse(sut.validateUppercaseLetter("bazbar"))
     }
 
     func testValidPassword() {
-        XCTAssertTrue(viewModel.validatePasswordLength("bazbar"))
-        XCTAssertTrue(viewModel.validateUppercaseLetter("Bazbar"))
+        XCTAssertTrue(sut.validatePasswordLength("bazbar"))
+        XCTAssertTrue(sut.validateUppercaseLetter("Bazbar"))
     }
 
     func testMatchingPasswords() {
-        viewModel.userButtonPressed(name: "John", surname: "Doe", date: "01-01-2000", password: "Password", secondPassword: "Password")
-        XCTAssertTrue(viewModel.isRegistrationSuccessful)
+        sut.userButtonPressed(name: "Baz", surname: "Bar", date: "01-01-2000", password: "Password", secondPassword: "Password")
+        XCTAssertTrue(sut.isRegistrationSuccessful)
     }
 
     func testNonMatchingPasswords() {
-        viewModel.userButtonPressed(name: "John", surname: "Doe", date: "01-01-2000", password: "Password", secondPassword: "DifferentPassword")
-        XCTAssertFalse(viewModel.isRegistrationSuccessful)
+        sut.userButtonPressed(name: "Baz", surname: "Bar", date: "01-01-2000", password: "Password", secondPassword: "DifferentPassword")
+        XCTAssertFalse(sut.isRegistrationSuccessful)
     }
 
     func testEmptyStatusText() {
-        viewModel.userButtonPressed(name: "John", surname: "Doe", date: "01-01-2000", password: "Password", secondPassword: "Password")
-        XCTAssertEqual(viewModel.statusText.value, "")
+        sut.userButtonPressed(name: "Baz", surname: "Bar", date: "01-01-2000", password: "Password", secondPassword: "Password")
+        XCTAssertEqual(sut.statusText.value, "")
     }
 
     func testStatusTextError() {
-        viewModel.userButtonPressed(name: "123", surname: "Doe", date: "01-01-2000", password: "Password", secondPassword: "Password")
-        XCTAssertNotEqual(viewModel.statusText.value, "")
+        sut.userButtonPressed(name: "123", surname: "Bar", date: "01-01-2000", password: "Password", secondPassword: "Password")
+        XCTAssertNotEqual(sut.statusText.value, "")
     }
 }
 

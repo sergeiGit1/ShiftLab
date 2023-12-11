@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let userDataStore = UserDataStore()
         
         if userDataStore.loadUserData() != nil {
-            let contestViewController = ContestViewController()
+            let contestViewController = NewsViewController()
             window?.rootViewController = contestViewController
         } else {
             let registrationviewController = RegistrationViewController()

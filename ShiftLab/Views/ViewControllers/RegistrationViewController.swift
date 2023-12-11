@@ -174,7 +174,7 @@ class RegistrationViewController: UIViewController {
         }
         
         viewModel.registrationCompletion = { [weak self] in
-            let contestViewController = ContestViewController()
+            let contestViewController = NewsViewController()
             contestViewController.modalPresentationStyle = .fullScreen
             self?.present(contestViewController, animated: true)
         }
