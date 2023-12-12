@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class RegistrationViewController: UIViewController {
     
@@ -14,6 +15,9 @@ class RegistrationViewController: UIViewController {
     private var activeTextField: UITextField?
     private let viewModel = RegistrationViewModel()
     private let uiComponentFactory = UIComponentFactory.shared
+    private var isButtonEnabled = false
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - UI Elements
     
@@ -75,6 +79,7 @@ class RegistrationViewController: UIViewController {
         setupUI()
         bindViewModel()
         registrationButton.isEnabled = false
+        updateButtonState()
         setupKeyboardObservers()
     }
     
@@ -168,11 +173,11 @@ class RegistrationViewController: UIViewController {
     // MARK: - ViewModel Binding
     
     private func bindViewModel() {
-        viewModel.statusText.bind { [weak self] (statusText) in
-            DispatchQueue.main.async {
+        viewModel.$statusText
+            .sink { [weak self] statusText in
                 self?.errorLabel.text = statusText
             }
-        }
+            .store(in: &cancellables)
         
         viewModel.registrationCompletion = { [weak self] in
             let bookViewController = BookViewController()
@@ -189,16 +194,15 @@ class RegistrationViewController: UIViewController {
               let date = dobTextField.text,
               let password = passwordTextField.text,
               let secondPassword = secondPasswordTextField.text else { return }
-
         viewModel.userButtonPressed(name: name, surname: surname, date: date, password: password, secondPassword: secondPassword)
     }
-
     
     // MARK: - TextField and Keyboard Handling
     
     @objc private func textFieldDidChange() {
         let allFieldsFilled = ![nameTextField, surnameTextField, dobTextField, passwordTextField, secondPasswordTextField].contains { $0.text?.isEmpty ?? true }
-        registrationButton.isEnabled = allFieldsFilled
+        isButtonEnabled = allFieldsFilled
+        updateButtonState()
     }
     
     private func setupKeyboardObservers() {
@@ -226,6 +230,17 @@ class RegistrationViewController: UIViewController {
     
     @objc private func doneGestureAction() {
         view.endEditing(true)
+    }
+    
+    //MARK: - Registration Button
+    
+    private func updateButtonState() {
+        if isButtonEnabled {
+            registrationButton.backgroundColor = .blue
+        } else {
+            registrationButton.backgroundColor = .gray
+        }
+        registrationButton.isEnabled = isButtonEnabled
     }
 }
 

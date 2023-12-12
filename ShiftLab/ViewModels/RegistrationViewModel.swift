@@ -6,69 +6,21 @@
 //
 
 import Foundation
+import Combine
 
 class RegistrationViewModel {
     private let userDataStore: UserDataStoreProtocol
-    var isRegistrationSuccessful: Bool = false
-    var registrationCompletion: (() -> Void)?
-    var statusText = Dynamic("")
-
-    init(userDataStore: UserDataStoreProtocol = UserDataStore()) {
-        self.userDataStore = userDataStore
-    }
-
-    func invalidNumberName(_ name: String) -> Bool {
-        return name.contains { $0.isNumber }
-    }
-
-    func invalidShortName(_ name: String) -> Bool {
-        return name.count <= 1
-    }
-
-    func validatePasswordLength(_ password: String) -> Bool {
-        let passwordRegex = "^[А-Яа-яA-Za-z0-9]{6,}$"
-        return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password)
-    }
-
-    func validateUppercaseLetter(_ password: String) -> Bool {
-        let uppercaseLetterRegex = ".*[A-ZА-Я]+.*"
-        return NSPredicate(format: "SELF MATCHES %@", uppercaseLetterRegex).evaluate(with: password)
-    }
+    private let validator: RegistrationValidator
+    @Published var statusText: String = ""
+    @Published var isRegistrationSuccessful: Bool = false
     
-    private func isNameValid(_ name: String) -> Bool {
-        if invalidNumberName(name) {
-            statusText.value = "Ошибка: Имя не может содержать цифры"
-            return false
-        } else if invalidShortName(name) {
-            statusText.value = "Ошибка: Имя слишком короткое. Оно должно состоять из более чем одной буквы"
-            return false
-        }
-        return true
-    }
+    var registrationCompletion: (() -> Void)?
+    
+    private var cancellables = Set<AnyCancellable>()
 
-    private func isSurnameValid(_ surname: String) -> Bool {
-        if invalidNumberName(surname) {
-            statusText.value = "Ошибка: Фамилия не может содержать цифры"
-            return false
-        } else if invalidShortName(surname) {
-            statusText.value = "Ошибка: Фамилия слишком короткая. Она должна состоять из более чем одной буквы"
-            return false
-        }
-        return true
-    }
-
-    private func isPasswordValid(_ password: String, secondPassword: String) -> Bool {
-        if !validatePasswordLength(password) {
-            statusText.value = "Ошибка: Пароль должен быть не менее 6 символов в длину"
-            return false
-        } else if !validateUppercaseLetter(password) {
-            statusText.value = "Ошибка: Пароль должен содержать хотя бы одну заглавную букву"
-            return false
-        } else if password != secondPassword {
-            statusText.value = "Ошибка: Пароли не совпадают"
-            return false
-        }
-        return true
+    init(userDataStore: UserDataStoreProtocol = UserDataStore(), validator: RegistrationValidator = RegistrationValidator()) {
+        self.userDataStore = userDataStore
+        self.validator = validator
     }
 
     func userButtonPressed(name: String, surname: String, date: String, password: String, secondPassword: String) {
@@ -76,16 +28,54 @@ class RegistrationViewModel {
             return
         }
 
-        statusText.value = ""
+        statusText = ""
         isRegistrationSuccessful = true
         
         let user = UserData(name: name, surname: surname, dateOfBirth: date, password: password)
         userDataStore.saveUserData(user: user)
         
         if isRegistrationSuccessful {
-            registrationCompletion?()
+            Just(())
+                .sink { [weak self] in
+                    self?.registrationCompletion?()
+                }
+                .store(in: &cancellables)
         }
     }
 
-}
+    private func isNameValid(_ name: String) -> Bool {
+        if validator.invalidNumberName(name) {
+            statusText = RegistrationError.numberInName.rawValue
+            return false
+        } else if validator.invalidShortName(name) {
+            statusText = RegistrationError.shortName.rawValue
+            return false
+        }
+        return true
+    }
 
+    private func isSurnameValid(_ surname: String) -> Bool {
+        if validator.invalidNumberName(surname) {
+            statusText = RegistrationError.numberInSurname.rawValue
+            return false
+        } else if validator.invalidShortName(surname) {
+            statusText = RegistrationError.shortSurname.rawValue
+            return false
+        }
+        return true
+    }
+
+    private func isPasswordValid(_ password: String, secondPassword: String) -> Bool {
+        if !validator.validatePasswordLength(password) {
+            statusText = RegistrationError.passwordTooShort.rawValue
+            return false
+        } else if !validator.validateUppercaseLetter(password) {
+            statusText = RegistrationError.passwordNeedsUppercase.rawValue
+            return false
+        } else if password != secondPassword {
+            statusText = RegistrationError.passwordsNotMatching.rawValue
+            return false
+        }
+        return true
+    }
+}

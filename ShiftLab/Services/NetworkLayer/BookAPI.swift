@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 enum BookAPIError: Error {
     case invalidURL
@@ -20,31 +21,23 @@ class BookAPI {
 
     private init() {}
 
-    func fetchData(completion: @escaping (Result<[Book], BookAPIError>) -> Void) {
+    func fetchData() -> AnyPublisher<[Book], BookAPIError> {
         guard let url = URL(string: endpoint) else {
-            completion(.failure(.invalidURL))
-            return
+            return Fail(error: .invalidURL).eraseToAnyPublisher()
         }
-
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                completion(.failure(.dataTaskError(error)))
-                return
+        
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .mapError { error in
+                    .dataTaskError(error)
             }
-
-            guard let data = data else {
-                completion(.failure(.noData))
-                return
+            .flatMap { data, _ in
+                Just(data)
+                    .decode(type: BookData.self, decoder: JSONDecoder())
+                    .mapError { error in
+                            .decodingError(error)
+                    }
             }
-
-            do {
-                let decoder = JSONDecoder()
-                let response = try decoder.decode(BookData.self, from: data)
-                completion(.success(response.data))
-            } catch let decodingError {
-                completion(.failure(.decodingError(decodingError)))
-            }
-        }
-        task.resume()
+            .map { $0.data }
+            .eraseToAnyPublisher()
     }
 }

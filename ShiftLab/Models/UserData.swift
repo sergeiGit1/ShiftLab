@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserData: Decodable, Encodable {
+struct UserData: Codable {
     let name: String?
     let surname: String?
     let dateOfBirth: String?

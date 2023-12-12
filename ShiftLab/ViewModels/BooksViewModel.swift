@@ -6,15 +6,14 @@
 //
 
 import Foundation
+import Combine
 
 class BooksViewModel {
     private let bookAPI = BookAPI.shared
-    var onDataUpdate: (() -> Void)?
-    var books: [Book] = [] {
-        didSet {
-            onDataUpdate?()
-        }
-    }
+    @Published var books: [Book] = []
+    
+    var cancellables = Set<AnyCancellable>()
+    
     
     func getBooksCount() -> Int {
         return books.count
@@ -25,14 +24,18 @@ class BooksViewModel {
     }
 
     func getData() {
-        bookAPI.fetchData { [weak self] result in
-            switch result {
-            case .success(let fetchedBooks):
+        bookAPI.fetchData()
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            }, receiveValue: { [weak self] fetchedBooks in
                 self?.books = fetchedBooks
-            case .failure(let failure):
-                print("\(failure)")
-            }
-        }
+            })
+            .store(in: &cancellables)
     }
 }
 

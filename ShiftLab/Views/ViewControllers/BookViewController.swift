@@ -52,9 +52,9 @@ class BookViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             booksTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            booksTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            booksTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            booksTableView.heightAnchor.constraint(equalToConstant: 600),
+            booksTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            booksTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            booksTableView.heightAnchor.constraint(equalToConstant: 590),
 
             greetingsButton.topAnchor.constraint(equalTo: booksTableView.bottomAnchor, constant: 50),
             greetingsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -76,7 +76,7 @@ class BookViewController: UIViewController {
         booksTableView.rowHeight = UITableView.automaticDimension
         booksTableView.estimatedRowHeight = 100
         
-        booksTableView.layer.borderWidth = 3.0
+        booksTableView.layer.borderWidth = 5.0
         booksTableView.layer.borderColor = UIColor.black.cgColor
         
         let refreshControl = UIRefreshControl()
@@ -87,11 +87,13 @@ class BookViewController: UIViewController {
     // MARK: - Data Fetching
 
     private func setupViewModel() {
-        viewModel.onDataUpdate = { [weak self] in
-            DispatchQueue.main.async {
-                self?.booksTableView.reloadData()
+        viewModel.$books
+            .sink { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.booksTableView.reloadData()
+                }
             }
-        }
+            .store(in: &viewModel.cancellables)
     }
 
     // MARK: - Button Action
@@ -113,6 +115,7 @@ class BookViewController: UIViewController {
     }
     
     //MARK: - Reload TableView
+    
     @objc private func refreshData() {
         viewModel.getData()
         booksTableView.refreshControl?.endRefreshing()
@@ -136,20 +139,6 @@ extension BookViewController: UITableViewDataSource, UITableViewDelegate {
         let book = viewModel.getBook(at: indexPath.row)
         cell.configure(with: book)
         return cell
-    }
-
-    // MARK: - UITableViewDelegate
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        let selectedBook = viewModel.getBook(at: indexPath.row)
-        
-        guard let url = URL(string: selectedBook.image) else { return }
-        
-        let imageViewController = ImageViewController()
-        imageViewController.imageURL = url
-        
-        present(imageViewController, animated: true)
     }
 }
 
