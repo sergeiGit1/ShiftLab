@@ -7,20 +7,21 @@
 
 import Foundation
 
-enum NewsAPIError: Error {
+enum BookAPIError: Error {
     case invalidURL
     case dataTaskError(Error)
     case noData
     case decodingError(Error)
 }
 
-class NewsAPI {
-    static let shared = NewsAPI()
+class BookAPI {
+    static let shared = BookAPI()
+    private let endpoint = "https://fakerapi.it/api/v1/books"
 
     private init() {}
 
-    func fetchData(completion: @escaping (Result<[Article], NewsAPIError>) -> Void) {
-        guard let url = URL(string: "https://newsapi.org/v2/everything?q=keyword&apiKey=f11f62acc6bc4ec08afc9b604c3b79c6") else {
+    func fetchData(completion: @escaping (Result<[Book], BookAPIError>) -> Void) {
+        guard let url = URL(string: endpoint) else {
             completion(.failure(.invalidURL))
             return
         }
@@ -38,8 +39,8 @@ class NewsAPI {
 
             do {
                 let decoder = JSONDecoder()
-                let response = try decoder.decode(NewsResponse.self, from: data)
-                completion(.success(response.articles))
+                let response = try decoder.decode(BookData.self, from: data)
+                completion(.success(response.data))
             } catch let decodingError {
                 completion(.failure(.decodingError(decodingError)))
             }

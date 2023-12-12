@@ -60,6 +60,7 @@ class RegistrationViewController: UIViewController {
         datePicker.locale = .current
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
+        datePicker.maximumDate = Date()
         datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
         return datePicker
     }()
@@ -174,22 +175,24 @@ class RegistrationViewController: UIViewController {
         }
         
         viewModel.registrationCompletion = { [weak self] in
-            let contestViewController = NewsViewController()
-            contestViewController.modalPresentationStyle = .fullScreen
-            self?.present(contestViewController, animated: true)
+            let bookViewController = BookViewController()
+            bookViewController.modalPresentationStyle = .fullScreen
+            self?.present(bookViewController, animated: true)
         }
     }
     
     // MARK: - ViewModel Interaction
     
     @objc private func registrationButtonAction() {
-        viewModel.userButtonPressed(
-            name: nameTextField.text ?? "",
-            surname: surnameTextField.text ?? "",
-            date: dobTextField.text ?? "",
-            password: passwordTextField.text ?? "",
-            secondPassword: secondPasswordTextField.text ?? "")
+        guard let name = nameTextField.text,
+              let surname = surnameTextField.text,
+              let date = dobTextField.text,
+              let password = passwordTextField.text,
+              let secondPassword = secondPasswordTextField.text else { return }
+
+        viewModel.userButtonPressed(name: name, surname: surname, date: date, password: password, secondPassword: secondPassword)
     }
+
     
     // MARK: - TextField and Keyboard Handling
     

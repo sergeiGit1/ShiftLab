@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ArticleTableViewCell: UITableViewCell {
+class BookTableViewCell: UITableViewCell {
 
     static let reuseIdentifier = "ArticleCell"
 
@@ -54,9 +54,9 @@ class ArticleTableViewCell: UITableViewCell {
         ])
     }
 
-    func configure(with article: Article) {
-        titleLabel.text = article.title
-        authorLabel.text = article.formattedAuthor
+    func configure(with book: Book) {
+        titleLabel.text = book.title
+        authorLabel.text = book.author
     }
 }
 
